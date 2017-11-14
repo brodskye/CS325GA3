@@ -316,26 +316,26 @@ int main()
 	int graph[n][n];
 
 	for (int i = 0;; i++) {
-	for (int j = 0;; j++) {
-	if (fscanf(fp, "%d", &test) == -1)
-	goto end;
-	graph[i][j] = test;
-	//printf("grid[%d][%d] = %d\n", i, j, grid[i][j]);
-	if ((k = fgetc(fp)) == '\n')
-	break;
+		for (int j = 0;; j++) {
+			if (fscanf(fp, "%d", &test) == -1)
+				goto end;
+			graph[i][j] = test;
+			//printf("grid[%d][%d] = %d\n", i, j, grid[i][j]);
+			if ((k = fgetc(fp)) == '\n')
+				break;
+		}
 	}
-	}
-	end:
+end:
 	printf("All Done\n");
 	printf("%d\n", n);
 	/*int n = 5;
 	int graph[5][5] = { { 0,1,9,9,1 },{ 1,0,1,9,9 },{ 9,1,0,1,9 },{ 9,9,1,0,1 },{ 1,9,9,1,0 } };
 	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			std::cout << graph[i][j] << " ";
-			if (j == n - 1)
-				std::cout << std::endl;
-		}
+	for (int j = 0; j < n; j++) {
+	std::cout << graph[i][j] << " ";
+	if (j == n - 1)
+	std::cout << std::endl;
+	}
 	}*/
 
 	/////////////////////////////////////////////////////////////////////////////////
@@ -383,8 +383,8 @@ int main()
 				}
 			}
 		}
-		//PROBLEM IS THE CONNECTIONS DON'T CHANGE FOR EACH NEW ITERATION IN CALCULATING MST2
-		PrimMST(ggraph); //CALL PRIM ALG TO GET MST //changes pairs to be for MST'
+
+		PrimMST(ggraph); //CALL PRIM ALG TO GET MST
 		total = 0;
 		for (std::vector<Pair>::const_iterator k = pairs.begin(); k != pairs.end(); ++k) {
 			total += graph[k->v1][k->v2];
@@ -395,26 +395,11 @@ int main()
 		mst.pairs = pairs;
 		mstVec.push_back(mst);
 		std::cout << total << std::endl;
-		//pairs.clear();
-
 	}
 
 	//ALL OF THE MSTs should be in an array called mstVEC at this point.
 
 	struct MST smallest = mstVec.at(0);
-	int c = 0;
-	//smallest.weight = INT_MAX;
-	/*for (int l = 0; l < mstVec.size(); l++) {
-		std::cout << "mstVec at " << l << ": " << mstVec.at(l).weight << std::endl;
-		if (mstVec.at(l).weight < smallest.weight && mstVec.at(l).weight != mst1.weight) {
-			smallest = mstVec.at(l);
-			c++;
-		}
-			//smallest = mstVec.at(l);
-		if (c == 0)
-			smallest = mst1;
-	}*/
-
 	for (int l = 0; l < mstVec.size(); l++) {
 		std::cout << "mstVec at " << l << ": " << mstVec.at(l).weight << std::endl;
 		if (mstVec.at(l).weight < smallest.weight) {
@@ -473,6 +458,8 @@ int main()
 			}
 		}
 	}
+	if (smallest.weight == INT_MAX)
+		smallest = mstVec.at(0);
 	struct MST mst3 = smallest;
 	std::cout << "Third MST: " << mst3.weight << std::endl;
 	mstWeights.push_back(mst3.weight);
